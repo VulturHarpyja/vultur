@@ -9,37 +9,36 @@
 class beam
 {
 public:
-	sf::Vector2f beamPosition;
+    // constructor (not really needed anymore, but left for consistency)
+    beam(sf::Vector2u /*winSize*/) {}
 
-	beam(sf::Vector2u winSize)
-	{
-		beamPosition = sf::Vector2f(winSize.x / 2.f, winSize.y / 2.f);
-	}
+    // calculating beam properties
+    //sf::RectangleShape createBeam(sf::Vector2i mousePos, sf::Vector2u winSize)
+    sf::RectangleShape createBeam(sf::Vector2f circlePos, sf::Vector2u winSize)
+    {
+        // beam always starts from window center (updated every call)
+        sf::Vector2f beamPosition(winSize.x / 2.f, winSize.y / 2.f);
 
-	// calculating beam properties
+        // mouse version
+        //int mousePosX = mousePos.x - beamPosition.x;
+        //int mousePosY = mousePos.y - beamPosition.y;		
+        //float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
+        //float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
 
-	//sf::RectangleShape createBeam(sf::Vector2i mousePos)
-	sf::RectangleShape createBeam(sf::Vector2f circlePos)
-	{
-		//int mousePosX = mousePos.x - beamPosition.x;
-		//int mousePosY = mousePos.y - beamPosition.y;		
-		//float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
-		//float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
-		int circlePosX = circlePos.x - beamPosition.x;
-		int circlePosY = circlePos.y - beamPosition.y;
-		float beamLength = sqrt((circlePosX * circlePosX) + (circlePosY * circlePosY));
-		float beamAngle = atan2(circlePosY, circlePosX) * (180 / 3.1415);
+        // circle version
+        int circlePosX = circlePos.x - beamPosition.x;
+        int circlePosY = circlePos.y - beamPosition.y;
+        float beamLength = sqrt((circlePosX * circlePosX) + (circlePosY * circlePosY));
+        float beamAngle = atan2(circlePosY, circlePosX) * (180 / 3.1415);
 
-		sf::Vector2f beamPosition = this->beamPosition;
+        // rectangle beam
+        sf::RectangleShape beam({ beamLength, 5.f });
+        beam.setPosition(beamPosition);
+        beam.setOrigin({ 0.f, 2.5f });
+        beam.setRotation(sf::degrees(beamAngle));
 
-		sf::RectangleShape beam({ beamLength, 5.f });
-		beam.setPosition(beamPosition);
-		beam.setOrigin({ 0.f, 2.5f });
-		beam.setRotation(sf::degrees(beamAngle));
-
-		return beam;
-	}
+        return beam;
+    }
 };
 
 #endif
-

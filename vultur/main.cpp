@@ -115,8 +115,8 @@ int main()
 		// render
 		window.clear(sf::Color::Black);
 
-		//window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window)));
-		window.draw(centreBeam.createBeam(playerCircle.getPosition()));
+		// window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window), window.getSize()));
+		window.draw(centreBeam.createBeam(playerCircle.getPosition(), window.getSize()));
 		window.draw(playerCircle.createPlayerSprite());
 		window.draw(mousePosTracker);
 		window.draw(circlePosTracker);
