@@ -31,49 +31,35 @@ public:
 	}
 };
 
+// function defining text properties
+sf::Text text(sf::Vector2f pos, sf::Font* font)
+{
+	sf::Text standardText(*font);
+	standardText.setPosition(pos);
+	standardText.setCharacterSize(24);
+	standardText.setFillColor(sf::Color::Red);
+	return standardText;
+}
+
 int main()
 {
 	// getting font
 	sf::Font roboto;
-	if (!roboto.openFromFile(".\\assets\\fonts\\static\\RobotoMono-Regular.ttf"))
-	{
-		std::cerr << ".Error while loading font" << std::endl;
-		return -1;
-	}
+	roboto.openFromFile(".\\assets\\fonts\\static\\RobotoMono-Regular.ttf");
 
 	// window constructed
 	sf::RenderWindow window;
 	window.create(sf::VideoMode({ 1200, 1200 }), "Window");
 
-	// mouse pos tracker
-	sf::Text mousePosTracker(roboto);
-	mousePosTracker.setPosition({ 0.f, 0.f });
-	mousePosTracker.setFont(roboto);
-	mousePosTracker.setCharacterSize(24);
-	mousePosTracker.setFillColor(sf::Color::Red);
-
-	// beam angle tracker
-	sf::Text beamAngleTracker(roboto);
-	beamAngleTracker.setPosition({ 0.f, 24.f });
-	beamAngleTracker.setFont(roboto);
-	beamAngleTracker.setCharacterSize(24);
-	beamAngleTracker.setFillColor(sf::Color::Red);
-
-	// fps tracker
+	// fps
 	sf::Clock clock;
 	float fps = 0.f;
-	sf::Text fpsTracker(roboto);
-	fpsTracker.setPosition({ 0.f, 48.f });
-	fpsTracker.setFont(roboto);
-	fpsTracker.setCharacterSize(24);
-	fpsTracker.setFillColor(sf::Color::Red);
 
-	// resolution tracker
-	sf::Text resolutionTracker(roboto);
-	resolutionTracker.setPosition({ 0.f, 72.f });
-	resolutionTracker.setFont(roboto);
-	resolutionTracker.setCharacterSize(24);
-	resolutionTracker.setFillColor(sf::Color::Red);
+	// trackers
+	sf::Text mousePosTracker = text({ 0.f, 0.f }, &roboto);
+	sf::Text beamAngleTracker = text({ 0.f, 24.f }, &roboto);
+	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
+	sf::Text fpsTracker = text({ 0.f, 48.f }, &roboto);
 
 	// main game loop
 	while (window.isOpen())
@@ -112,7 +98,7 @@ int main()
 		settings.antiAliasingLevel = 8;
 		fpsTracker.setString("FPS: " + std::to_string(static_cast<int>(fps)));
 
-		// fps
+		// fps calc.
 		float deltaTime = clock.restart().asSeconds();
 		fps = 1.f / deltaTime;
 
