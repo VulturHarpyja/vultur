@@ -3,6 +3,7 @@
 #include <Windows.h>
 #include <iostream>
 #include "beam.h"
+#include "playerSprite.h"
 
 // function defining text properties
 sf::Text text(sf::Vector2f pos, sf::Font* font)
@@ -31,13 +32,8 @@ int main()
 	// trackers
 	sf::Text mousePosTracker = text({ 0.f, 0.f }, &roboto);
 	sf::Text beamAngleTracker = text({ 0.f, 24.f }, &roboto);
-	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
 	sf::Text fpsTracker = text({ 0.f, 48.f }, &roboto);
-
-	// circle
-	sf::CircleShape playerCircle(15.f);
-	playerCircle.setFillColor(sf::Color::White);
-	playerCircle.setPosition({ 600.f, 600.f });
+	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
 
 	// main game loop
 	while (window.isOpen())
@@ -56,6 +52,7 @@ int main()
 				window.setView(sf::View(visibleArea));
 			}
 
+			// values calculated for trackers
 			sf::Vector2u winSize = window.getSize();
 			auto beamPosition = sf::Vector2f(winSize.x / 2.f, winSize.y / 2.f);
 			auto mousePos = sf::Mouse::getPosition(window);
@@ -70,20 +67,22 @@ int main()
 		// beam constructed
 		beam centreBeam(window.getSize());
 
+		playerSprite playerCircle(window.getSize());
+
 		// graphics settings
 		window.setVerticalSyncEnabled(true);
 		sf::ContextSettings settings;
 		settings.antiAliasingLevel = 8;
 		fpsTracker.setString("FPS: " + std::to_string(static_cast<int>(fps)));
 
-		// fps calc.
+		// fps calculations
 		float deltaTime = clock.restart().asSeconds();
 		fps = 1.f / deltaTime;
 
 		// render
 		window.clear(sf::Color::Black);
-		window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window)));
-		window.draw(playerCircle);
+		//window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window)));
+		window.draw(playerCircle.createPlayerSprite());
 		window.draw(mousePosTracker);
 		window.draw(beamAngleTracker);
 		window.draw(fpsTracker);

@@ -1,6 +1,8 @@
 #ifndef BEAM_H
 #define BEAM_H
 
+#include <SFML/Graphics.hpp>
+#include <SFML/Window.hpp>
 #include <iostream>
 
 class beam

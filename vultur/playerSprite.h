@@ -16,11 +16,11 @@ public:
 	};
 
 	// calculating playerSprite properties
-	sf::CircleShape createplayerSprite()
+	sf::CircleShape createPlayerSprite()
 	{
 		sf::CircleShape playerSprite({ 15.f });
 		playerSprite.setPosition(playerSpritePosition);
-		playerSprite.setOrigin({ 0.f, 2.5f });
+		playerSprite.setOrigin({ 15.f, 15.f });
 
 		return playerSprite;
 	}
