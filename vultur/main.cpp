@@ -35,6 +35,10 @@ int main()
 	sf::Text fpsTracker = text({ 0.f, 48.f }, &roboto);
 	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
 
+	// constructing
+	beam centreBeam(window.getSize());
+	playerSprite playerCircle;
+
 	// main game loop
 	while (window.isOpen())
 	{
@@ -64,10 +68,26 @@ int main()
 			beamAngleTracker.setString("Line angle: " + std::to_string(beamAngle));
 			resolutionTracker.setString("Current Res.: " + std::to_string(winSize.x) + "x" + std::to_string(winSize.y));
 		}
-		// beam constructed
-		beam centreBeam(window.getSize());
 
-		playerSprite playerCircle(window.getSize());
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
+		{
+			playerCircle.move({ 0.f, -5.f });
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
+		{
+			playerCircle.move({ -5.f, 0.f });
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
+		{
+			playerCircle.move({ 0.f, 5.f });
+		}
+
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
+		{
+			playerCircle.move({ 5.f, 0.f });
+		}
 
 		// graphics settings
 		window.setVerticalSyncEnabled(true);
@@ -81,12 +101,15 @@ int main()
 
 		// render
 		window.clear(sf::Color::Black);
+
 		//window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window)));
+		window.draw(centreBeam.createBeam(playerCircle.getPosition()));
 		window.draw(playerCircle.createPlayerSprite());
 		window.draw(mousePosTracker);
 		window.draw(beamAngleTracker);
 		window.draw(fpsTracker);
 		window.draw(resolutionTracker);
+
 		window.display();
 	}
 }

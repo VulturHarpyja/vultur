@@ -2,29 +2,45 @@
 #define PLAYERSPRITE_H
 
 #include <SFML/Graphics.hpp>
-#include <SFML/Window.hpp>
 #include <iostream>
 
 class playerSprite
 {
 public:
-	sf::Vector2f playerSpritePosition;
+    playerSprite()
+    {
+        circle.setRadius(15.f);
+        circle.setOrigin({ 15.f, 15.f }); // center origin
+        circle.setFillColor(sf::Color::Green);
+        circle.setPosition({ 600.f, 600.f }); // initial position
+    }
 
-	playerSprite(sf::Vector2u winSize)
-	{
-		playerSpritePosition = sf::Vector2f(winSize.x / 2.f, winSize.y / 2.f);
-	};
+    // movement
+    void move(const sf::Vector2f& offset)
+    {
+        circle.move(offset);
+    }
 
-	// calculating playerSprite properties
-	sf::CircleShape createPlayerSprite()
-	{
-		sf::CircleShape playerSprite({ 15.f });
-		playerSprite.setPosition(playerSpritePosition);
-		playerSprite.setOrigin({ 15.f, 15.f });
+    // custom set position
+    void setPosition(const sf::Vector2f& pos)
+    {
+        circle.setPosition(pos);
+    }
 
-		return playerSprite;
-	}
+    // custom get position
+    sf::Vector2f getPosition() const
+    {
+        return circle.getPosition();
+    }
+
+    // returns circle when called in main
+    const sf::CircleShape& createPlayerSprite() const
+    {
+        return circle;
+    }
+
+private:
+    sf::CircleShape circle;
 };
 
 #endif
-
