@@ -139,7 +139,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="beam.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="playerSprite.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="beam.h" />
+    <ClInclude Include="playerSprite.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

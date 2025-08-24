@@ -2,34 +2,7 @@
 #include <SFML/Window.hpp>
 #include <Windows.h>
 #include <iostream>
-
-class beam 
-{
-public:
-	sf::Vector2f beamPosition;
-
-	beam(sf::Vector2u winSize) 
-	{
-		beamPosition = sf::Vector2f(winSize.x / 2.f, winSize.y / 2.f);
-	}
-
-	// calculating beam properties
-	sf::RectangleShape createBeam(sf::Vector2i mousePos)
-	{
-		int mousePosX = mousePos.x - beamPosition.x;
-		int mousePosY = mousePos.y - beamPosition.y;
-		float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
-		float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
-		sf::Vector2f beamPosition = this->beamPosition;
-
-		sf::RectangleShape beam({ beamLength, 5.f });
-		beam.setPosition(beamPosition);
-		beam.setOrigin({ 0.f, 2.5f });
-		beam.setRotation(sf::degrees(beamAngle));
-
-		return beam;
-	}
-};
+#include "beam.h"
 
 // function defining text properties
 sf::Text text(sf::Vector2f pos, sf::Font* font)
@@ -60,6 +33,11 @@ int main()
 	sf::Text beamAngleTracker = text({ 0.f, 24.f }, &roboto);
 	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
 	sf::Text fpsTracker = text({ 0.f, 48.f }, &roboto);
+
+	// circle
+	sf::CircleShape playerCircle(15.f);
+	playerCircle.setFillColor(sf::Color::White);
+	playerCircle.setPosition({ 600.f, 600.f });
 
 	// main game loop
 	while (window.isOpen())
@@ -105,6 +83,7 @@ int main()
 		// render
 		window.clear(sf::Color::Black);
 		window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window)));
+		window.draw(playerCircle);
 		window.draw(mousePosTracker);
 		window.draw(beamAngleTracker);
 		window.draw(fpsTracker);
