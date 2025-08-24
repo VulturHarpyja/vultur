@@ -34,8 +34,9 @@ int main()
 	sf::Text beamAngleTracker = text({ 0.f, 24.f }, &roboto);
 	sf::Text fpsTracker = text({ 0.f, 48.f }, &roboto);
 	sf::Text resolutionTracker = text({ 0.f, 72.f }, &roboto);
+	sf::Text beamLenTracker = text({ 0.f, 96.f }, &roboto);
 
-	// constructing
+	// constructing objects
 	beam centreBeam(window.getSize());
 	playerSprite playerCircle;
 
@@ -62,28 +63,33 @@ int main()
 			auto mousePos = sf::Mouse::getPosition(window);
 			int mousePosX = mousePos.x - winSize.x;
 			int mousePosY = mousePos.y - winSize.y;
+			auto circlePos = playerCircle.getPosition();
+			int circlePosX = circlePos.x - beamPosition.x;
+			int circlePosY = circlePos.y - beamPosition.y;
 			float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
+			//float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
+			float beamLength = sqrt((circlePosX * circlePosX) + (circlePosY * circlePosY));
 
+			// display texts for trackers
 			mousePosTracker.setString("Mouse posX: " + std::to_string(mousePosX) + " Mouse posY: " + std::to_string(mousePosY));
 			beamAngleTracker.setString("Line angle: " + std::to_string(beamAngle));
 			resolutionTracker.setString("Current Res.: " + std::to_string(winSize.x) + "x" + std::to_string(winSize.y));
+			beamLenTracker.setString("Beam Length: " + std::to_string(beamLength));
 		}
 
+		// movement
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::W))
 		{
 			playerCircle.move({ 0.f, -5.f });
 		}
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A))
 		{
 			playerCircle.move({ -5.f, 0.f });
 		}
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::S))
 		{
 			playerCircle.move({ 0.f, 5.f });
 		}
-
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D))
 		{
 			playerCircle.move({ 5.f, 0.f });
@@ -109,6 +115,7 @@ int main()
 		window.draw(beamAngleTracker);
 		window.draw(fpsTracker);
 		window.draw(resolutionTracker);
+		window.draw(beamLenTracker);
 
 		window.display();
 	}
