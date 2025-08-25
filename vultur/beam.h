@@ -9,14 +9,12 @@
 class beam
 {
 public:
-    // constructor (not really needed anymore, but left for consistency)
-    beam(sf::Vector2u /*winSize*/) {}
 
     // calculating beam properties
     //sf::RectangleShape createBeam(sf::Vector2i mousePos, sf::Vector2u winSize)
     sf::RectangleShape createBeam(sf::Vector2f circlePos, sf::Vector2u winSize)
     {
-        // beam always starts from window center (updated every call)
+        // beam always starts from window center
         sf::Vector2f beamPosition(winSize.x / 2.f, winSize.y / 2.f);
 
         // mouse version

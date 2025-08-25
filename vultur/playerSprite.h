@@ -10,9 +10,9 @@ public:
     playerSprite()
     {
         circle.setRadius(15.f);
-        circle.setOrigin({ 15.f, 15.f }); // center origin
+        circle.setOrigin({ 15.f, 15.f });
         circle.setFillColor(sf::Color::Green);
-        circle.setPosition({ 600.f, 600.f }); // initial position
+        circle.setPosition({ 600.f, 600.f });
     }
 
     // movement

@@ -94,11 +94,11 @@ int main()
 			resolutionTracker.setString("Current Res.: " + std::to_string(winSize.x) + "x" + std::to_string(winSize.y));
 			beamLenTracker.setString("Beam Len./Dist. from centre: " + std::to_string(beamLength));
 			if (isGrabbed) {
-				isGrabbedTracker.setFillColor(sf::Color::Green);  // grabbed = green
+				isGrabbedTracker.setFillColor(sf::Color::Green);
 				isGrabbedTracker.setString("isGrabbed: true");
 			}
 			else {
-				isGrabbedTracker.setFillColor(sf::Color::Red);    // not grabbed = red
+				isGrabbedTracker.setFillColor(sf::Color::Red);
 				isGrabbedTracker.setString("isGrabbed: false");
 			}
 		}
@@ -170,5 +170,5 @@ int main()
 // ---------------------------TODO---------------------------
 // # Designate a key to reset circle to centre.
 // # Create physics for circle.
-// 
+// # Watch some C++ course.
 //
