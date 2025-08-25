@@ -83,9 +83,9 @@ int main()
 			int circlePosX = circlePos.x - beamPosition.x;
 			int circlePosY = circlePos.y - beamPosition.y;
 			//float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
-			//float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
+			//float beamLength = hypot(mousePosX mousePosY);
 			float beamAngle = atan2(circlePosY, circlePosX) * (180 / 3.1415);
-			float beamLength = sqrt((circlePosX * circlePosX) + (circlePosY * circlePosY));
+			float beamLength = hypot(circlePosX, circlePosY);
 
 			// display texts for trackers
 			mousePosTracker.setString("Mouse posX: " + std::to_string(mousePosX) + " Mouse posY: " + std::to_string(mousePosY));
@@ -153,7 +153,7 @@ int main()
 		window.clear(sf::Color::Black);
 
 		//window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window), window.getSize()));
-		//window.draw(centreBeam.createBeam(playerCircle.getPosition(), window.getSize()));
+		window.draw(centreBeam.createBeam(playerCircle.getPosition(), window.getSize()));
 		window.draw(playerCircle.createPlayerSprite());
 		window.draw(mousePosTracker);
 		window.draw(circlePosTracker);
@@ -166,3 +166,9 @@ int main()
 		window.display();
 	}
 }
+
+// ---------------------------TODO---------------------------
+// # Designate a key to reset circle to centre.
+// # Create physics for circle.
+// 
+//

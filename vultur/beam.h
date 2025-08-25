@@ -22,13 +22,13 @@ public:
         // mouse version
         //int mousePosX = mousePos.x - beamPosition.x;
         //int mousePosY = mousePos.y - beamPosition.y;		
-        //float beamLength = sqrt((mousePosX * mousePosX) + (mousePosY * mousePosY));
+        //float beamLength = hypot(mousePosX mousePosY);
         //float beamAngle = atan2(mousePosY, mousePosX) * (180 / 3.1415);
 
         // circle version
         int circlePosX = circlePos.x - beamPosition.x;
         int circlePosY = circlePos.y - beamPosition.y;
-        float beamLength = sqrt((circlePosX * circlePosX) + (circlePosY * circlePosY));
+        float beamLength = hypot(circlePosX, circlePosY);
         float beamAngle = atan2(circlePosY, circlePosX) * (180 / 3.1415);
 
         // rectangle beam
