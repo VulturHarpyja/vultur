@@ -33,6 +33,13 @@ public:
         return circle.getPosition();
     }
 
+    // custom get global bounds
+    sf::FloatRect getGlobalBounds() const
+    {
+        return circle.getGlobalBounds();
+    }
+
+
     // returns circle when called in main
     const sf::CircleShape& createPlayerSprite() const
     {

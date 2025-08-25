@@ -8,14 +8,22 @@
 float textPositionY = 0;
 
 // function defining text properties
-sf::Text text(sf::Font* font)
+sf::Text text(sf::Font* font, bool green)
 {
 	sf::Vector2f textPosition = { 0.f, (textPositionY) };
 	textPositionY += 24;
 	sf::Text standardText(*font);
 	standardText.setPosition(textPosition);
 	standardText.setCharacterSize(24);
-	standardText.setFillColor(sf::Color::Red);
+	//standardText.setFillColor(sf::Color::Red);
+	if (green) 
+	{
+		standardText.setFillColor(sf::Color::Green);
+	}
+	else 
+	{
+		standardText.setFillColor(sf::Color::Red);
+	}
 	return standardText;
 }
 
@@ -34,16 +42,19 @@ int main()
 	float fps = 0.f;
 
 	// trackers
-	sf::Text mousePosTracker = text(&roboto);
-	sf::Text circlePosTracker = text(&roboto);
-	sf::Text beamAngleTracker = text(&roboto);
-	sf::Text fpsTracker = text(&roboto);
-	sf::Text resolutionTracker = text(&roboto);
-	sf::Text beamLenTracker = text(&roboto);
+	sf::Text mousePosTracker = text(&roboto, false);
+	sf::Text circlePosTracker = text(&roboto, false);
+	sf::Text beamAngleTracker = text(&roboto, false);
+	sf::Text fpsTracker = text(&roboto, false);
+	sf::Text resolutionTracker = text(&roboto, false);
+	sf::Text beamLenTracker = text(&roboto, false);
+	sf::Text isGrabbedTracker = text(&roboto, false);
 
 	// constructing objects
 	beam centreBeam(window.getSize());
 	playerSprite playerCircle;
+
+	bool isGrabbed = false;
 
 	// main game loop
 	while (window.isOpen())
@@ -81,7 +92,15 @@ int main()
 			circlePosTracker.setString("Circle posX: " + std::to_string(circlePosX) + " Circle posY: " + std::to_string(circlePosY));
 			beamAngleTracker.setString("Line angle: " + std::to_string(beamAngle));
 			resolutionTracker.setString("Current Res.: " + std::to_string(winSize.x) + "x" + std::to_string(winSize.y));
-			beamLenTracker.setString("Beam Length: " + std::to_string(beamLength));
+			beamLenTracker.setString("Beam Len./Dist. from centre: " + std::to_string(beamLength));
+			if (isGrabbed) {
+				isGrabbedTracker.setFillColor(sf::Color::Green);  // grabbed = green
+				isGrabbedTracker.setString("isGrabbed: true");
+			}
+			else {
+				isGrabbedTracker.setFillColor(sf::Color::Red);    // not grabbed = red
+				isGrabbedTracker.setString("isGrabbed: false");
+			}
 		}
 
 		// movement
@@ -102,6 +121,24 @@ int main()
 			playerCircle.move({ 2.5f, 0.f });
 		}
 
+		sf::Vector2i mousePos = sf::Mouse::getPosition(window);
+		sf::Vector2f mousePosFloat(static_cast<float>(mousePos.x), static_cast<float>(mousePos.y));
+
+		// detects if mouse is being held on circle
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left) && 
+			playerCircle.getGlobalBounds().contains(mousePosFloat) && !isGrabbed)
+		{
+			isGrabbed = true;	
+		}
+		if (isGrabbed)
+		{
+			playerCircle.setPosition(mousePosFloat);
+		}
+		if (!(sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)))
+		{
+			isGrabbed = false;
+		}
+
 		// graphics settings
 		window.setVerticalSyncEnabled(true);
 		sf::ContextSettings settings;
@@ -115,8 +152,8 @@ int main()
 		// render
 		window.clear(sf::Color::Black);
 
-		// window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window), window.getSize()));
-		window.draw(centreBeam.createBeam(playerCircle.getPosition(), window.getSize()));
+		//window.draw(centreBeam.createBeam(sf::Mouse::getPosition(window), window.getSize()));
+		//window.draw(centreBeam.createBeam(playerCircle.getPosition(), window.getSize()));
 		window.draw(playerCircle.createPlayerSprite());
 		window.draw(mousePosTracker);
 		window.draw(circlePosTracker);
@@ -124,6 +161,7 @@ int main()
 		window.draw(fpsTracker);
 		window.draw(resolutionTracker);
 		window.draw(beamLenTracker);
+		window.draw(isGrabbedTracker);
 
 		window.display();
 	}
